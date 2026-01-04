@@ -15,6 +15,16 @@ Es ist recht einfach möglich, den vorhandenen ESP32 S3 Mini-1 neu zu flashen.
 
 Um zum Original zurückkehren zu können, habe ich mit dem ESP-Tool die [originale Firmware](/firmware/ESP32-S3-Mini-1_Lepro-TB1.7z) gesichert.
 
+### Update Firmware/Flashen
+
+Ich habe eine [WLED Firmware Lepro TB1](/firmware/WLED_0.16.0-alpha_ESP32-S3_4M_Mini_Lepro_TB1_full.7z) compiliert, die alle notwendigem Einstellungen voreingestellt hat und die sich einfach flashen lässt:  
+- das Archiv entpacken
+- [WLED web installer von ESP Home aufrufen](https://web.esphome.io/) im Chrome Browser!
+- Install aufrufen
+- die entpackte Datei ``WLED_0.16.0-alpha_ESP32-S3_4M_Mini_Lepro_TB1_full.bin`` auswählen und installieren lassen
+- Anschließend über den Access Point die WiFi Zugangsdaten angeben
+
+
 ### Das Flashen ist nicht ganz einfach
 
 Der [WLED web installer](https://install.wled.me) funktioniert <b>NICHT!</b>
@@ -40,6 +50,13 @@ Button 0 GPIO: 13 Pushbutton
 Relay GPIO: 38 Invert x (selected)
 
 Damit sollte die Lampe funktionieren
+
+
+### Audio Reactive
+
+Pin I2S SD: 39  
+Pin I2S WS: 2
+Pin I2S SCK: 1
 
 ## Bilder
 
