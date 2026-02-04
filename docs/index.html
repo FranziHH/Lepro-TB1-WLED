@@ -279,7 +279,7 @@
           }
 
           const url = new URL(window.location.href);
-          const pathBase = `${url.origin}${url.pathname.replace(/[^/]+$/, "").replace("docs/", "")}${CONFIG.basePath}`;
+          const pathBase = `${window.location.origin}${url.pathname.replace(/[^/]+$/, "")}${CONFIG.basePath}`;
 
           // 1. Nur den Dateinamen für die Anzeige extrahieren
           // const fileName = version.split('/').pop();
