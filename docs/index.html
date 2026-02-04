@@ -110,6 +110,7 @@
         <select id="action-select">
           <option value="full" id="ui-opt-full">Full Flash</option>
           <option value="update" id="ui-opt-update">Update</option>
+          <option value="restore" id="ui-opt-restore">Original Restore</option>
         </select>
       </div>
 
@@ -154,6 +155,7 @@
             optChoose: "-- Bitte wählen --",
             optFull: "Full Flash (Neuinstallation)",
             optUpdate: "Update (Aktualisierung)",
+            optRestore: "Original Restore",
             optVersion: "-- Version wählen --",
             statusStart: "Bitte wähle zuerst deine Hardware aus.",
             statusReady: "Bereit: {action}. Verbinde den Stick per USB.",
@@ -170,6 +172,7 @@
             optChoose: "-- Please select --",
             optFull: "Full Flash (New Install)",
             optUpdate: "Update (Firmware update)",
+            optRestore: "Original Restore",
             optVersion: "-- Select version --",
             statusStart: "Please select your hardware first.",
             statusReady: "Ready: {action}. Connect the stick via USB.",
@@ -190,6 +193,7 @@
           document.getElementById("ui-opt-full").textContent = t.optFull;
           document.getElementById("ui-opt-update").textContent = t.optUpdate;
           document.getElementById("ui-opt-version").textContent = t.optVersion;
+          document.getElementById("ui-opt-restore").textContent = t.optRestore;
           document.getElementById("ui-info").innerHTML = t.info;
           document.getElementById("status-text").innerHTML = t.statusText;
         }
