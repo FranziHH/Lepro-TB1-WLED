@@ -1,12 +1,13 @@
 <!doctype html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="favicon.png" type="image/x-icon" />
-    <title>WLED Flash Tool</title>
-    <!-- <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script> -->
-    <!--//
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon.png" type="image/x-icon" />
+  <title>WLED Flash Tool</title>
+  <!-- <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script> -->
+  <!--//
         Offline Version 
         https://app.unpkg.com/esp-web-tools@10.2.1/files/dist/web
         Download mit Trick
@@ -15,335 +16,384 @@
         danach sind die Files hier zu finden
         node_modules/esp-web-tools/dist/web/
     //-->
-    <script type="module" src="js/install-button.js"></script>
-    <style>
-      body {
-        font-family: sans-serif;
-        background: #f4f4f9;
-        display: flex;
-        justify-content: center;
-        padding: 40px;
-      }
+  <script type="module" src="js/install-button.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
 
-      .card {
-        background: white;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 450px;
-        text-align: center;
-      }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 450px;
+      text-align: center;
+    }
 
-      .input-group {
-        margin-bottom: 20px;
-        text-align: left;
-      }
+    .input-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
 
-      label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 8px;
-        font-size: 0.9rem;
-      }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
 
-      select {
-        width: 100%;
-        padding: 12px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
-        background: #fff;
-        font-size: 1rem;
-      }
+    select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: #fff;
+      font-size: 1rem;
+    }
 
-      .ui-info {
-        font-size: 0.9rem;
-        color: #444;
-        margin-bottom: 20px;
-        padding: 15px;
-        background: #e8f0fe;
-        border-left: 4px solid #1a73e8;
-        border-radius: 4px;
-        line-height: 1.4;
-      }
+    .ui-info {
+      font-size: 0.9rem;
+      color: #444;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #e8f0fe;
+      border-left: 4px solid #1a73e8;
+      border-radius: 4px;
+      line-height: 1.4;
+    }
 
-      .info {
-        font-size: 0.9rem;
-        color: #444;
-        margin-top: 20px;
-        padding: 15px;
-        background: #fffde7;
-        border-left: 5px solid #ffd600;
-        border-radius: 4px;
-        text-align: left;
-        line-height: 1.4;
-      }
+    .info {
+      font-size: 0.9rem;
+      color: #444;
+      margin-top: 20px;
+      padding: 15px;
+      background: #fffde7;
+      border-left: 5px solid #ffd600;
+      border-radius: 4px;
+      text-align: left;
+      line-height: 1.4;
+    }
 
-      esp-web-install-button {
-        display: none;
-        margin-top: 35px;
-      }
+    esp-web-install-button {
+      display: none;
+      margin-top: 35px;
+    }
 
-      #projectlogo {
-        height: 1em;
-        /* passt sich der H2-Schriftgröße an */
-        width: auto;
-        vertical-align: middle;
-      }
+    #projectlogo {
+      height: 1em;
+      /* passt sich der H2-Schriftgröße an */
+      width: auto;
+      vertical-align: middle;
+    }
 
-      #projectlogo {
-        border: 0px none;
-      }
-    </style>
-  </head>
+    #projectlogo {
+      border: 0px none;
+    }
+  </style>
+</head>
 
-  <body>
-    <div class="card">
-      <h2 id="ui-title">
-        WLED Flash Tool
-      </h2>
+<body>
+  <div class="card">
+    <h2 id="ui-title">
+      WLED Flash Tool
+    </h2>
 
-      <div id="ui-info" class="ui-info">...</div>
+    <div id="ui-info" class="ui-info">...</div>
 
-      <div class="input-group">
-        <label id="ui-label-action" for="action-select">Aktion:</label>
-        <select id="action-select">
-          <option value="full" id="ui-opt-full">Full Flash</option>
-          <option value="update" id="ui-opt-update">Update</option>
-          <option value="restore" id="ui-opt-restore">Original Restore</option>
-        </select>
-      </div>
-
-      <div class="input-group">
-        <label id="ui-label-version" for="version-select">Version:</label>
-        <select id="version-select" disabled>
-          <option value="do-select" disabled selected id="ui-opt-version">
-            -- Version wählen --
-          </option>
-        </select>
-      </div>
-
-      <div id="status-text" class="info">
-        After successful flashing, press RESET again.
-      </div>
-
-      <esp-web-install-button id="install-button"></esp-web-install-button>
+    <div class="input-group">
+      <label id="ui-label-action" for="action-select">Aktion:</label>
+      <select id="action-select">
+        <option value="full" id="ui-opt-full">Full Flash</option>
+        <option value="update" id="ui-opt-update">Update</option>
+        <option value="restore" id="ui-opt-restore">Original Restore</option>
+      </select>
     </div>
 
-    <script>
-      (async () => {
-        const actionSelect = document.getElementById("action-select");
-        const versionSelect = document.getElementById("version-select");
-        const button = document.getElementById("install-button");
-        const installButton = document.querySelector("esp-web-install-button");
+    <div class="input-group">
+      <label id="ui-label-version" for="version-select">Version:</label>
+      <select id="version-select" disabled>
+        <option value="do-select" disabled selected id="ui-opt-version">
+          -- Version wählen --
+        </option>
+      </select>
+    </div>
 
-        const hw = "wled"; // es gibt keine Hardware Auswahl
-        let currentManifestUrl = null;
-        let versions = null;
+    <div id="status-text" class="info">
+      After successful flashing, press RESET again.
+    </div>
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const lang =
-          urlParams.get("lang") ||
-          (navigator.language.startsWith("de") ? "de" : "en");
+    <div id="my-button" style="display:none">
+      <esp-web-install-button id="install-button"></esp-web-install-button>
+    </div>
+    <div id="my-error">
+      <span id="error-msg"></span>
+    </div>
+  </div>
 
-        const i18n = {
+  <script>
+    (function () {
+      const force = () => {
+        // HIER IST DER BROWSERCHECK: Prüft ob 'serial' überhaupt existiert
+        const isSerialSupported = "serial" in navigator;
+
+        // Check für Mobilgeräte
+        const isMobile = (navigator.maxTouchPoints > 0 || /Android|iP(hone|ad|od)/i.test(navigator.userAgent));
+
+        const userLang = navigator.language.startsWith('de') ? 'de' : 'en';
+        const msg = {
           de: {
-            title:
-              "WLED Flash Tool",
-            labelAction: "Aktion:",
-            labelVersion: "Version:",
-            optChoose: "-- Bitte wählen --",
-            optFull: "Full Flash (Neuinstallation)",
-            optUpdate: "Update (Aktualisierung)",
-            optRestore: "Original Restore",
-            optVersion: "-- Version wählen --",
-            statusStart: "Bitte wähle zuerst deine Hardware aus.",
-            statusReady: "Bereit: {action}. Verbinde den Stick per USB.",
-            statusUnavailable:
-              "⚠️ Für diese Auswahl ist keine Version verfügbar.",
-            info: "<b><u>Nur für Lepro TB1</u></b><br><b>Boot-Modus:</b><br>1. <b>BOOT</b> halten,<br>2. <b>RST</b> drücken,<br>3. <b>BOOT</b> loslassen.",
-            statusText: "Nach dem erfolgreichen Flashen nochmal RESET Drücken.",
+            m: "⚠️ <strong>Mobilgerät erkannt:</strong> Das Flashen über USB funktioniert leider nur an einem Computer (PC/Mac/Laptop).",
+            b: "⚠️ <strong>Browser nicht kompatibel:</strong> Bitte nutze Google Chrome oder Microsoft Edge, um dieses Gerät zu programmieren."
           },
           en: {
-            title:
-              "WLED Flash Tool",
-            labelAction: "Action:",
-            labelVersion: "Version:",
-            optChoose: "-- Please select --",
-            optFull: "Full Flash (New Install)",
-            optUpdate: "Update (Firmware update)",
-            optRestore: "Original Restore",
-            optVersion: "-- Select version --",
-            statusStart: "Please select your hardware first.",
-            statusReady: "Ready: {action}. Connect the stick via USB.",
-            statusUnavailable: "⚠️ No version available for this selection.",
-            info: "<b><u>Only for Lepro TB1</u></b><br><b>Boot Mode:</b><br>1. Hold <b>BOOT</b>,<br>2. Press <b>RST</b>,<br>3. Release <b>BOOT</b>.",
-            statusText: "After successful flashing, press RESET again.",
-          },
+            m: "⚠️ <strong>Mobile device detected:</strong> Flashing via USB only works on a computer (PC, Mac, or Laptop).",
+            b: "⚠️ <strong>Browser not compatible:</strong> Please use Google Chrome or Microsoft Edge to program this device."
+          }
         };
 
-        const t = i18n[lang];
+        const lang = msg[userLang];
+        const el = document.getElementById("error-msg");
 
-        function initUI() {
-          document.getElementById("ui-title").innerHTML = t.title;
-          document.getElementById("ui-label-action").textContent =
-            t.labelAction;
-          document.getElementById("ui-label-version").textContent =
-            t.labelVersion;
-          document.getElementById("ui-opt-full").textContent = t.optFull;
-          document.getElementById("ui-opt-update").textContent = t.optUpdate;
-          document.getElementById("ui-opt-version").textContent = t.optVersion;
-          document.getElementById("ui-opt-restore").textContent = t.optRestore;
-          document.getElementById("ui-info").innerHTML = t.info;
-          document.getElementById("status-text").innerHTML = t.statusText;
-        }
-
-        async function loadVersions() {
-          const cfg = await fetch("config.json?t=" + Date.now(), {
-            cache: "no-store",
-          });
-          config = await cfg.json();
-          window.CONFIG = config; // global speichern
-
-          const res = await fetch("versions.json?t=" + Date.now(), {
-            cache: "no-store",
-          });
-          versions = await res.json();
-          console.log("versions.json geladen:", versions);
-
-          const supportsWebSerial = "serial" in navigator;
-          if (!supportsWebSerial) {
-            installButton.style.color = "red";
-            installButton.style.display = "block";
-            statusText.style.display = "none";
+        if (el) {
+          // LOGIK: 
+          // 1. Wenn Mobilgerät -> Mobil-Text
+          // 2. Wenn PC aber KEIN Serial (Firefox/Safari) -> Browser-Text
+          if (isMobile) {
+            el.innerHTML = lang.m;
+            el.style.display = "block";
+          } else if (!isSerialSupported) {
+            el.innerHTML = lang.b;
+            el.style.display = "block";
           } else {
-            updateVersionList();
-            updateManifest();
+            document.getElementById("my-error").style.display = "none";
+            document.getElementById("my-button").style.display = "block";
           }
+          el.style.color = "red";
         }
+      };
+    })();
 
-        function updateVersionAvailability() {
-          if (!versions) return;
+    (async () => {
+      const actionSelect = document.getElementById("action-select");
+      const versionSelect = document.getElementById("version-select");
+      const button = document.getElementById("install-button");
+      const installButton = document.querySelector("esp-web-install-button");
 
+      const hw = "wled"; // es gibt keine Hardware Auswahl
+      let currentManifestUrl = null;
+      let versions = null;
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const lang =
+        urlParams.get("lang") ||
+        (navigator.language.startsWith("de") ? "de" : "en");
+
+      const i18n = {
+        de: {
+          title:
+            "WLED Flash Tool",
+          labelAction: "Aktion:",
+          labelVersion: "Version:",
+          optChoose: "-- Bitte wählen --",
+          optFull: "Full Flash (Neuinstallation)",
+          optUpdate: "Update (Aktualisierung)",
+          optRestore: "Original Restore",
+          optVersion: "-- Version wählen --",
+          statusStart: "Bitte wähle zuerst deine Hardware aus.",
+          statusReady: "Bereit: {action}. Verbinde den Stick per USB.",
+          statusUnavailable:
+            "⚠️ Für diese Auswahl ist keine Version verfügbar.",
+          info: "<b><u>Nur für Lepro TB1</u></b><br><b>Boot-Modus:</b><br>1. <b>BOOT</b> halten,<br>2. <b>RST</b> drücken,<br>3. <b>BOOT</b> loslassen.",
+          statusText: "Nach dem erfolgreichen Flashen nochmal RESET Drücken.",
+        },
+        en: {
+          title:
+            "WLED Flash Tool",
+          labelAction: "Action:",
+          labelVersion: "Version:",
+          optChoose: "-- Please select --",
+          optFull: "Full Flash (New Install)",
+          optUpdate: "Update (Firmware update)",
+          optRestore: "Original Restore",
+          optVersion: "-- Select version --",
+          statusStart: "Please select your hardware first.",
+          statusReady: "Ready: {action}. Connect the stick via USB.",
+          statusUnavailable: "⚠️ No version available for this selection.",
+          info: "<b><u>Only for Lepro TB1</u></b><br><b>Boot Mode:</b><br>1. Hold <b>BOOT</b>,<br>2. Press <b>RST</b>,<br>3. Release <b>BOOT</b>.",
+          statusText: "After successful flashing, press RESET again.",
+        },
+      };
+
+      const t = i18n[lang];
+
+      function initUI() {
+        document.getElementById("ui-title").innerHTML = t.title;
+        document.getElementById("ui-label-action").textContent =
+          t.labelAction;
+        document.getElementById("ui-label-version").textContent =
+          t.labelVersion;
+        document.getElementById("ui-opt-full").textContent = t.optFull;
+        document.getElementById("ui-opt-update").textContent = t.optUpdate;
+        document.getElementById("ui-opt-version").textContent = t.optVersion;
+        document.getElementById("ui-opt-restore").textContent = t.optRestore;
+        document.getElementById("ui-info").innerHTML = t.info;
+        document.getElementById("status-text").innerHTML = t.statusText;
+      }
+
+      async function loadVersions() {
+        const cfg = await fetch("config.json?t=" + Date.now(), {
+          cache: "no-store",
+        });
+        config = await cfg.json();
+        window.CONFIG = config; // global speichern
+
+        const res = await fetch("versions.json?t=" + Date.now(), {
+          cache: "no-store",
+        });
+        versions = await res.json();
+        console.log("versions.json geladen:", versions);
+
+        const supportsWebSerial = "serial" in navigator;
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        if (!supportsWebSerial || isMobile) {
+          installButton.style.color = "red";
           installButton.style.display = "block";
-        }
-
-        function updateVersionList() {
-          const action = actionSelect.value;
-          versionSelect.innerHTML = "";
-
-          if (!versions) return;
-
-          const list = versions[hw][action];
-
-          if (!list || list.length === 0) {
-            versionSelect.disabled = true;
-            return;
-          }
-
-          const def = document.createElement("option");
-          def.textContent = t.optVersion;
-          def.disabled = true;
-          def.selected = true;
-          versionSelect.appendChild(def);
-
-          list.forEach((entry) => {
-            const opt = document.createElement("option");
-            opt.value = entry.id;
-            opt.textContent = entry.name;
-            // NEU: Offset im Datensatz der Option speichern
-            opt.dataset.offset = entry.offset || "0x0";
-            versionSelect.appendChild(opt);
-          });
-
-          versionSelect.disabled = false;
-          installButton.style.display = "none";
-        }
-
-        function updateManifest() {
-          const action = actionSelect.value;
-          const version = versionSelect.value;
-          const selectedOption =
-            versionSelect.options[versionSelect.selectedIndex];
-
-          if (!versions || !version) {
-            button.style.display = "none";
-            return;
-          }
-
-          let offset =
-            versionSelect.options[versionSelect.selectedIndex].dataset.offset;
-          offset = parseInt(offset, 16);
-
-          let eraseConfig = {};
-
-          if (action === "update") {
-            // UPDATE: Offset setzen UND Löschen strikt verbieten
-            // offset = 0x10000;
-
-            // Verhindert das Löschen vollständig; dem Benutzer wird keine Löschoption angezeigt. -> FALSCH! fkt. nicht
-            eraseConfig = {
-              new_install_prompt_erase: true,
-              new_install_prevent_erase: true,
-            };
-          } else {
-            // NEUINSTALLATION:
-            // Dialog erscheint, Benutzer wird gefragt (kann aber noch löschen wählen)
-            /*
-            eraseConfig = {
-              new_install_prompt_erase: true,
-            };
-            */
-          }
-
-          const url = new URL(window.location.href);
-          const pathBase = `${window.location.origin}${url.pathname}${CONFIG.basePath}`;
-
-          // 1. Nur den Dateinamen für die Anzeige extrahieren
-          // const fileName = version.split('/').pop();
-          const fileName = version;
-
-          const manifest = {
-            name: "WLED",
-            version: fileName,
-            ...eraseConfig,
-            builds: [
-              {
-                chipFamily: "ESP32-S3",
-                parts: [{ path: `${pathBase}/${version}`, offset: offset }],
-              },
-            ],
-          };
-
-          if (currentManifestUrl) {
-            URL.revokeObjectURL(currentManifestUrl);
-          }
-
-          const blob = new Blob([JSON.stringify(manifest)], {
-            type: "application/json",
-          });
-          currentManifestUrl = URL.createObjectURL(blob);
-
-          // Zuweisung an den Button
-          button.manifest = currentManifestUrl;
-          // button.style.display = "block";
-        }
-
-        actionSelect.addEventListener("change", () => {
-          const supportsWebSerial = "serial" in navigator;
-          if (!supportsWebSerial) return;
+          statusText.style.display = "none";
+        } else {
           updateVersionList();
           updateManifest();
+        }
+      }
+
+      function updateVersionAvailability() {
+        if (!versions) return;
+
+        installButton.style.display = "block";
+      }
+
+      function updateVersionList() {
+        const action = actionSelect.value;
+        versionSelect.innerHTML = "";
+
+        if (!versions) return;
+
+        const list = versions[hw][action];
+
+        if (!list || list.length === 0) {
+          versionSelect.disabled = true;
+          return;
+        }
+
+        const def = document.createElement("option");
+        def.textContent = t.optVersion;
+        def.disabled = true;
+        def.selected = true;
+        versionSelect.appendChild(def);
+
+        list.forEach((entry) => {
+          const opt = document.createElement("option");
+          opt.value = entry.id;
+          opt.textContent = entry.name;
+          // NEU: Offset im Datensatz der Option speichern
+          opt.dataset.offset = entry.offset || "0x0";
+          versionSelect.appendChild(opt);
         });
 
-        versionSelect.addEventListener("change", () => {
-          updateVersionAvailability();
-          updateManifest();
-        });
+        versionSelect.disabled = false;
+        installButton.style.display = "none";
+      }
 
-        initUI();
-        await loadVersions();
-      })();
-    </script>
-  </body>
+      function updateManifest() {
+        const action = actionSelect.value;
+        const version = versionSelect.value;
+        const selectedOption =
+          versionSelect.options[versionSelect.selectedIndex];
+
+        if (!versions || !version) {
+          button.style.display = "none";
+          return;
+        }
+
+        let offset =
+          versionSelect.options[versionSelect.selectedIndex].dataset.offset;
+        offset = parseInt(offset, 16);
+
+        let eraseConfig = {};
+
+        if (action === "update") {
+          // UPDATE: Offset setzen UND Löschen strikt verbieten
+          // offset = 0x10000;
+
+          // Verhindert das Löschen vollständig; dem Benutzer wird keine Löschoption angezeigt. -> FALSCH! fkt. nicht
+          eraseConfig = {
+            new_install_prompt_erase: true,
+            new_install_prevent_erase: true,
+          };
+        } else {
+          // NEUINSTALLATION:
+          // Dialog erscheint, Benutzer wird gefragt (kann aber noch löschen wählen)
+          /*
+          eraseConfig = {
+            new_install_prompt_erase: true,
+          };
+          */
+        }
+
+        const url = new URL(window.location.href);
+        const pathBase = `${window.location.origin}${url.pathname}${CONFIG.basePath}`;
+
+        // 1. Nur den Dateinamen für die Anzeige extrahieren
+        // const fileName = version.split('/').pop();
+        const fileName = version;
+
+        const manifest = {
+          name: "WLED",
+          version: fileName,
+          ...eraseConfig,
+          builds: [
+            {
+              chipFamily: "ESP32-S3",
+              parts: [{ path: `${pathBase}/${version}`, offset: offset }],
+            },
+          ],
+        };
+
+        if (currentManifestUrl) {
+          URL.revokeObjectURL(currentManifestUrl);
+        }
+
+        const blob = new Blob([JSON.stringify(manifest)], {
+          type: "application/json",
+        });
+        currentManifestUrl = URL.createObjectURL(blob);
+
+        // Zuweisung an den Button
+        button.manifest = currentManifestUrl;
+        // button.style.display = "block";
+      }
+
+      actionSelect.addEventListener("change", () => {
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        if (!supportsWebSerial || isMobile) return;
+        updateVersionList();
+        updateManifest();
+      });
+
+      versionSelect.addEventListener("change", () => {
+        updateVersionAvailability();
+        updateManifest();
+      });
+
+      initUI();
+      await loadVersions();
+    })();
+  </script>
+</body>
+
 </html>
