@@ -137,13 +137,13 @@
   </div>
 
   <script>
-    (function () {
       // HIER IST DER BROWSERCHECK: Prüft ob 'serial' überhaupt existiert
       const isSerialSupported = "serial" in navigator;
 
       // Check für Mobilgeräte
       const isMobile = (navigator.maxTouchPoints > 0 || /Android|iP(hone|ad|od)/i.test(navigator.userAgent));
 
+    (function () {
       const userLang = navigator.language.startsWith('de') ? 'de' : 'en';
       const msg = {
         de: {
