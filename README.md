@@ -13,7 +13,7 @@ Ausgehend von der Idee, diese Lampe mit WLED zu betreiben, habe ich die Lampe de
 
 Es ist recht einfach möglich, den vorhandenen ESP32 S3 Mini-1 neu zu flashen.
 
-Um zum Original zurückkehren zu können, habe ich mit dem ESP-Tool die [originale Firmware](/docs/firmware/ESP32-S3-Mini-1_Lepro-TB1.bin) gesichert.
+Um zum Original zurückkehren zu können, habe ich mit dem ESP-Tool die [originale Firmware](./docs/firmware/ESP32-S3-Mini-1_Lepro-TB1.bin) gesichert.
 
 
 ### Firmware/Flashen
@@ -21,7 +21,7 @@ Um zum Original zurückkehren zu können, habe ich mit dem ESP-Tool die [origina
 Ich bin dabei, die Beschreibung weiter zu Verbessern.
 Images Full und Update compiliere ich nach verfügbaren WLED Updates neu.
 
-Die Images können hier heruntergeladen werden: [Firmware](/docs/firmware/)
+Die Images können hier heruntergeladen werden: [Firmware](/docs/firmware)
 
 Um das Flashen zu erleichtern habe ich einen Firmware Flasher bereitgestellt:   
 [WLED Flash Tool - für Lepro TB1](https://franzihh.github.io/Lepro-TB1-WLED/)
