@@ -2,6 +2,11 @@
   "wled": {
     "full": [
       {
+        "id": "2026-04-06_WLED_17.0.0-dev_ESP32-S3_4M_Mini_Lepro_TB1_full.bin",
+        "name": "2026-04-06 17.0.0-dev",
+        "offset": "0x0"
+      },
+      {
         "id": "2026-04-05_WLED_17.0.0-dev_ESP32-S3_4M_Mini_Lepro_TB1_full.bin",
         "name": "2026-04-05 17.0.0-dev",
         "offset": "0x0"
@@ -38,6 +43,11 @@
       }
     ],
     "update": [
+      {
+        "id": "2026-04-06_WLED_17.0.0-dev_ESP32-S3_4M_Mini_Lepro_TB1_ota.bin",
+        "name": "2026-04-06 17.0.0-dev",
+        "offset": "0x10000"
+      },
       {
         "id": "2026-04-05_WLED_17.0.0-dev_ESP32-S3_4M_Mini_Lepro_TB1_ota.bin",
         "name": "2026-04-05 17.0.0-dev",
