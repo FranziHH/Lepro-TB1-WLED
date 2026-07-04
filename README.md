@@ -7,6 +7,7 @@
   </a>
 </div>
 
+
 ## Beschreibung
 
 Ausgehend von der Idee, diese Lampe mit WLED zu betreiben, habe ich die Lampe demontiert und erforscht.
