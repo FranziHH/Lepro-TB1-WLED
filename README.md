@@ -1,3 +1,8 @@
+# Important 2026-07-20
+
+I will not be integrating the changes to ESP V5 at this time. 
+The changes are too extensive; I don't have the time.
+
 # Lepro TB1 Umbau auf WLED 
 
 <div style="display: flex; align-items: center;">
